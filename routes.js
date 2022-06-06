@@ -14,57 +14,69 @@ routes.post('/game', async (req, res) => {
   }
 });
 
-routes.get('/games', (req, res) => {
-  return res.status(200).json(DB.games);
+routes.get('/games', async (req, res) => {
+  try {
+    const games = await Game.find();
+    return res.status(200).json(games);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 });
 
-routes.get('/game/:id', (req, res) => {
-  const id = req.params.id;
+routes.get('/game/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
 
-  if (isNaN(id)) return res.status(400).json({ error: 'Parâmetro inválido' });
+    const game = await Game.findById(id);
 
-  let game = DB.games.find(g => g.id == id);
+    if (!game) return res.status(404).json({ error: 'Game não encontrado' });
 
-  if (!game) return res.status(404).json({ error: 'Game não encontrado' });
-
-  return res.status(200).json(game);
+    return res.status(200).json(game);
+  } catch (error) {
+    return res.status(500).json({error: error.message})
+  }
 });
 
-routes.delete('/game/:id', (req, res) => {
-  const id = req.params.id;
+routes.delete('/game/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
 
-  if (isNaN(id)) return res.status(400).json({ error: 'Parâmetro inválido' });
+    const game = await Game.findById(id);
+    if (!game) return res.status(404).json({ error: 'Jogo não encontrado' });
 
-  let index = DB.games.findIndex(g => g.id == id)
+    await Game.deleteOne({_id: id});
 
-  if (index == -1) return res.status(404).json({ error: 'Game não encontrado' });
-
-  let removedGame = DB.games.splice(index, 1);
-
-  return res.status(200).json({ data: removedGame, message: 'Game removido' });
+    return res.status(200).json({ data: game, message: 'Game removido' });
+  } catch (error) {
+    return res.status(500).json({error: error.message});
+  }
 })
 
-routes.put('/game/:id', (req, res) => {
-  const id = req.params.id;
-  const { name, year, price } = req.body;
+routes.put('/game/:id', async (req, res) => {
 
-  if (isNaN(id)) return res.status(400).json({ error: 'Parâmetro inválido' });
+  try {
+    const id = req.params.id;
+    const { name, year, price } = req.body;
 
-  let game = DB.games.find(g => g.id == id);
+    const game = await Game.findById(id);
+    if (!game) return res.status(404).json({ error: 'Game não encontrado' });
 
-  if (!game) return res.status(404).json({ error: 'Game não encontrado' });
+    if (name != undefined) {
+      game.name = name
+    }
 
-  if (name != undefined) {
-    game.name = name
+    if (year != undefined) { 
+      game.year = year;
+    }
+
+    if (price != undefined) { 
+      game.price = price
+    }
+
+    game.save();
+
+    return res.status(200).json(game);
+  } catch (error) {
+    
   }
-
-  if (year != undefined) { 
-    game.year = year;
-  }
-
-  if (price != undefined) { 
-    game.price = price
-  }
-
-  return res.status(200).json(game);
 });
