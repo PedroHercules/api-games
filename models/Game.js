@@ -13,7 +13,8 @@ const gameSchema = new Schema({
   },
   price: {
     type: Number,
-    require: true
+    require: true,
+    default: 0
   }
 });
 
