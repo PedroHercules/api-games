@@ -1,8 +1,8 @@
 import express from 'express';
 
-import { Game } from './models/Game.js';
+import { Game } from '../models/Game.js';
 
-export const routes = express.Router();
+const routes = express.Router();
 
 routes.post('/game', async (req, res) => {
   try {
@@ -126,3 +126,5 @@ routes.put('/game/:id', async (req, res) => {
     return res.status(500).send()
   }
 });
+
+export default routes;
