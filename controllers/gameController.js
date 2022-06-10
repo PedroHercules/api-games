@@ -123,7 +123,7 @@ routes.put('/game/:id', async (req, res) => {
 
     return res.status(200).json(game);
   } catch (error) {
-    return res.status(500).send()
+    return res.status(500).json({error: error.message})
   }
 });
 
