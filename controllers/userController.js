@@ -2,6 +2,8 @@ import express from 'express';
 
 import { User } from '../models/User.js';
 
+import { generateToken } from '../services/auth-service.js';
+
 const routes = express.Router();
 
 routes.post('/register', async (req, res) => {
@@ -46,7 +48,8 @@ routes.post('/auth', async (req, res) => {
       return res.status(404).json({ error: "Senha incorreta" });
     }
     user.password = undefined;
-    return res.status(200).json({ user })
+    const token = generateToken({ id: user.id, nickname: user.nickname });
+    return res.status(200).json({ token, user })
   } catch (error) {
     return res.status(500).send();
   }

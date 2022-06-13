@@ -2,9 +2,11 @@ import express from 'express';
 
 import { Game } from '../models/Game.js';
 
+import { authorize } from '../services/auth-service.js';
+
 const routes = express.Router();
 
-routes.post('/game', async (req, res) => {
+routes.post('/game', authorize, async (req, res) => {
   try {
     const { name, year, price } = req.body;
     if (!name || !year){
@@ -65,7 +67,7 @@ routes.get('/game/:id', async (req, res) => {
   }
 });
 
-routes.delete('/game/:id', async (req, res) => {
+routes.delete('/game/:id', authorize, async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -84,7 +86,7 @@ routes.delete('/game/:id', async (req, res) => {
   }
 })
 
-routes.put('/game/:id', async (req, res) => {
+routes.put('/game/:id', authorize, async (req, res) => {
 
   try {
     const id = req.params.id;
