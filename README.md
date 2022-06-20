@@ -4,16 +4,25 @@ An API develop for practicing concepts of REST API. It's a game API, which we ca
 ## This API was developed in:
  - Javascript
  - Nodejs
+ - JWT
  - Express
  - MongoDB
  - Mongoose
  
  ## Endpoints
  <span style="color: blue;"> Games </span>
- ### GET /games
+ ### `GET` /games
  > Return all games in database
+ > 
+ > Parameters: None
+ > 
+ > Authorization: Yes
+ 
+ #### Headers
+ > access-token: "JWT token"
  #### Response
- ```js
+ ```json
+ status 200 OK
   [
    {
     "_id": "629d4d633ed767f59edf4c82",
@@ -29,8 +38,11 @@ An API develop for practicing concepts of REST API. It's a game API, which we ca
     "price": 50,
     "__v": 0
    },
-   .
-   .
-   .
   ]
+ ```
+ ```json
+ status 401 Unauthorized
+ {
+  "error": "token inválido OR acesso restrito"
+ }
  ```
