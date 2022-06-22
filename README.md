@@ -120,7 +120,45 @@ An API develop for practicing concepts of REST API. It's a game API, which we ca
  }
  ```
  
- ### `DELETE` /game/:id
+ ### `PUT` /game/:id
+ > Update a specific game by ID
+ > 
+ > Parameters: Yes
+ > 
+ > Authorization: Yes
+ 
+ #### Headers
+ > access-token: "JWT token"
+ #### Response
+ ```json
+ status 200 OK
+ {
+  "_id": "629e95b6e65d912a7be6a932",
+  "name": "PES 2020",
+  "year": 2022,
+  "price": 0,
+  "__v": 0
+ }
+ ```
+ ```json
+ status 400 Bad Request
+ {
+  "error": "ID parameter is required OR error in data body"
+ }
+ ```
+ ```json
+ status 401 Unauthorized
+ {
+  "error": "invalid token OR restricted access"
+ }
+ ```
+ ```json
+ status 404 Not Found
+ {
+  "error": "Game not found"
+ }
+ ```
+### `DELETE` /game/:id
  > Delete a specific game by ID
  > 
  > Parameters: Yes
@@ -129,6 +167,14 @@ An API develop for practicing concepts of REST API. It's a game API, which we ca
  
  #### Headers
  > access-token: "JWT token"
+ #### Body
+ ```json
+  {
+   "name": "God of War",
+   "price": 90,
+   "year": 2018
+  }
+ ```
  #### Response
  ```json
  status 200 OK
