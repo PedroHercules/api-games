@@ -9,6 +9,83 @@ An API develop for practicing concepts of REST API. It's a game API, which we ca
  - MongoDB
  - Mongoose
  
+ ## User Endpoints
+ ### `POST` /register
+ > Register a new user in database
+ > 
+ > Parameters: None
+ > 
+ > Authorization: None
+ 
+ #### Body
+ ```json
+ {
+  "nickname": "pedro",
+  "email":"pedro@example.com",
+  "password": "password"
+ }
+ ```
+ #### Response
+ ```json
+ status 201 CREATED
+ {
+  "user": {
+   "nickname": "pedro",
+   "email": "pedro@example.com",
+   "_id": "62b3463e206b9ca05057cdff",
+   "__v": 0
+  },
+  "message": "Usuário criado"
+ }
+ ```
+ ```json
+ status 400 Bad Request
+ {
+  "error": "User already exists OR error in data body"
+ }
+ ```
+ ### `POST` /auth
+ > Authenticate user in API
+ > 
+ > Parameters: None
+ > 
+ > Authorization: None
+ 
+ #### Body
+ ```json
+ {
+  "nickname": "pedro",
+  "password": "password"
+ }
+ ```
+ #### Response
+ ```json
+ status 200 OK
+ {
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cC...",
+  "user": {
+   "_id": "62a2959b040d026feedf4807",
+   "nickname": "pedro",
+   "email": "pedro@example.com",
+   "__v": 0
+  }
+ }
+ ```
+ ```json
+ status 400 Bad Request
+ {
+  "error": "error in data body"
+ }
+ ```
+ 
+ ```
+ ```json
+ status 404 Not Found
+ {
+  "error": "User not found OR incorrect password"
+ }
+ ```
+ #
  ## Game Endpoints
  ### `POST` /game
  > Register a game in database
