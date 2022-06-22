@@ -40,7 +40,7 @@ routes.post('/game', authorize, async (req, res) => {
   }
 });
 
-routes.get('/games', async (req, res) => {
+routes.get('/games', authorize, async (req, res) => {
   try {
     const games = await Game.find();
     return res.status(200).json(games);
@@ -49,7 +49,7 @@ routes.get('/games', async (req, res) => {
   }
 });
 
-routes.get('/game/:id', async (req, res) => {
+routes.get('/game/:id', authorize, async (req, res) => {
   try {
     const id = req.params.id;
 

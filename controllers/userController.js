@@ -7,11 +7,9 @@ import { generateToken } from '../services/auth-service.js';
 const routes = express.Router();
 
 routes.post('/register', async (req, res) => {
-  console.log('kkkkk')
   try {
     const { nickname, email, password } = req.body;
-
-    if (!nickname || !email || password){
+    if (!nickname || !email || !password){
       return res.status(400).json({error: "Dados de usuário são obrigatórios"});
     }
 
@@ -19,13 +17,13 @@ routes.post('/register', async (req, res) => {
 
     if (userExist) return res.status(400).json({ error: 'Esse usuário já existe' });
 
-    await User.create({
+    const user = await User.create({
       nickname,
       email,
       password
     });
-
-    return res.status(201).json({ message: 'Usuário criado' });
+    user.password = undefined;
+    return res.status(201).json({ user, message: 'Usuário criado' });
   } catch (error) {
     return res.status(500).send();
   }
