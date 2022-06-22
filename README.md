@@ -87,7 +87,7 @@ An API develop for practicing concepts of REST API. It's a game API, which we ca
  }
  ```
  
- ### `GET` /games/:id
+ ### `GET` /game/:id
  > Return a specific game by ID
  > 
  > Parameters: Yes
@@ -106,6 +106,48 @@ An API develop for practicing concepts of REST API. It's a game API, which we ca
    "price": 85,
    "__v": 0
   }
+ ```
+ ```json
+ status 401 Unauthorized
+ {
+  "error": "invalid token OR restricted access"
+ }
+ ```
+ ```json
+ status 404 Not Found
+ {
+  "error": "Game not found"
+ }
+ ```
+ 
+ ### `DELETE` /game/:id
+ > Delete a specific game by ID
+ > 
+ > Parameters: Yes
+ > 
+ > Authorization: Yes
+ 
+ #### Headers
+ > access-token: "JWT token"
+ #### Response
+ ```json
+ status 200 OK
+ {
+  "data": {
+   "_id": "629e95b6e65d912a7be6a932",
+   "name": "PES 2020",
+   "year": 2022,
+   "price": 0,
+   "__v": 0
+  },
+  "message": "Game removido"
+ }
+ ```
+ ```json
+ status 400 Bad Request
+ {
+  "error": "ID parameter is required"
+ }
  ```
  ```json
  status 401 Unauthorized
