@@ -9,8 +9,48 @@ An API develop for practicing concepts of REST API. It's a game API, which we ca
  - MongoDB
  - Mongoose
  
- ## Endpoints
- <span style="color: blue;"> Games </span>
+ ## Game Endpoints
+ ### `POST` /game
+ > Register a game in database
+ > 
+ > Parameters: None
+ > 
+ > Authorization: Yes
+ 
+ #### Headers
+ > access-token: "JWT token"
+ #### Body
+ ```json
+  {
+   "name": "God of War",
+   "price": 90,
+   "year": 2018
+  }
+ ```
+ #### Response
+ ```json
+ status 201 CREATED
+  {
+   "_id": "629d4d633ed767f59edf4c82",
+   "name": "God of War",
+   "year": 2018,
+   "price": 90,
+   "__v": 0
+  }
+ ```
+ ```json
+ status 400 Bad request
+ {
+  "error": "Error in body data OR game already exists"
+ }
+ ```
+ ```json
+ status 401 Unauthorized
+ {
+  "error": "invalid token OR restricted access"
+ }
+ ```
+ 
  ### `GET` /games
  > Return all games in database
  > 
@@ -43,6 +83,39 @@ An API develop for practicing concepts of REST API. It's a game API, which we ca
  ```json
  status 401 Unauthorized
  {
-  "error": "token inválido OR acesso restrito"
+  "error": "invalid token OR restricted access"
+ }
+ ```
+ 
+ ### `GET` /games/:id
+ > Return a specific game by ID
+ > 
+ > Parameters: Yes
+ > 
+ > Authorization: Yes
+ 
+ #### Headers
+ > access-token: "JWT token"
+ #### Response
+ ```json
+ status 200 OK
+  {
+   "_id": "629d4d633ed767f59edf4c82",
+   "name": "FIFA 22",
+   "year": 2021,
+   "price": 85,
+   "__v": 0
+  }
+ ```
+ ```json
+ status 401 Unauthorized
+ {
+  "error": "invalid token OR restricted access"
+ }
+ ```
+ ```json
+ status 404 Not Found
+ {
+  "error": "Game not found"
  }
  ```
