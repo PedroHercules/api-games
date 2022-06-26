@@ -284,3 +284,8 @@ An API develop for practicing concepts of REST API. It's a game API, which we ca
   "error": "Game not found"
  }
  ```
+ ## How run
+ ```shell
+ npm install
+ npm run dev
+ ```
